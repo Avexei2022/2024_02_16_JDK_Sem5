@@ -50,7 +50,7 @@ public class Service {
     }
 
     private void tryToEat(Philosopher philosopher, Fork forkLeft, Fork forkRight) throws InterruptedException {
-        if (isForksFree(forkLeft, forkRight)) {
+        if (isForksFree(philosopher, forkLeft, forkRight)) {
             String string = philosopher.getName() + philosopher.takesFood()
                     + " вилками:  " + forkLeft.getName() + " и " + forkRight.getName();
             System.out.println(string);
@@ -63,8 +63,8 @@ public class Service {
         }
     }
 
-    private synchronized boolean isForksFree(Fork forkLeft, Fork forkRight) {
-        if (!forkLeft.getIsUsed() && !forkRight.getIsUsed()) {
+    private synchronized boolean isForksFree(Philosopher philosopher, Fork forkLeft, Fork forkRight) {
+        if (!forkLeft.getIsUsed() && !forkRight.getIsUsed() && !philosopher.getIsJustTakeFood()) {
             forkLeft.setIsUsed(true);
             forkRight.setIsUsed(true);
             return true;
